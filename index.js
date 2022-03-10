@@ -1,66 +1,167 @@
 var express = require('express');
-const res = require('express/lib/response');
 var jwt = require('jsonwebtoken');
-const logins = require('./logins.json')
+const cors = require('cors');
+
+const bodyParser = require('body-parser');
+const { decode } = require('jsonwebtoken');
 var app = express();
-var cors = require('cors');
-const SECRET = "secret";
 
-app.use(cors());
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(cors())
+const PORT = 8828
 
-const messages = [
+let messages =  [
   {
-    id : 1,
-    title : 'Titre du message 1',
-    content : 'contenu du message 1',
-    isRead: false,
-    sent: new Date()
-  },
-  {
-    id : 2,
-    title : 'Titre du message 2',
-    content : 'contenu du message 2',
-    isRead: false,
-    sent: new Date()
-  },
-  {
-    id : 3,
-    title : 'Titre du message 3',
-    content : 'contenu du message 3',
-    isRead: false,
-    sent: new Date()
-  },
-];
+      id: 1,
+      title : "Message",
+      content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
+      sent: new Date,
+      isRead: true,
+    },
+    {
+      id: 2,
+      title : "Message",
+      content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
+      sent: new Date,
+      isRead: true,
+    },
+    {
+      id: 3,
+      title : "Message",
+      content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
+      sent: new Date,
+      isRead: false,
+    },
+    {
+      id: 4,
+      title : "Message",
+      content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
+      sent: new Date,
+      isRead: false,
+    },
+    {
+      id: 5,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    {
+      id: 6,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    {
+      id: 7,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    {
+      id: 8,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    {
+      id: 9,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    {
+      id: 10,
+      title: 'Message',
+      content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
+      isRead: false,
+      sent: new Date()
+    },
+    
+  ]
 
-//envoie une requête et renvoie les messages sous forme de json
-app.get("/api", function (req, res) {
-  res.setHeader('Access-Control-Allow-Origin', "*")
+let user = {
+  name : "toto",
+  email : "toto.titi@hotmail.com",
+  password: "1234",
+  token: ""
+}
+
+let options = { 
+  expiresIn: 60*60*60, 
+  algorithm : 'HS256'
+}
+  
+// generation de token
+app.post('/logins', (req, res) => {
+  if (req.body.email == user.email && req.body.password == user.password) {
+    var token = jwt.sign({email: user.email, password: user.password}, 'private_key', options);
+    user.token = token;
+    res.send(token)
+    console.log("Vous êtes authentifié !")
+  }else{
+    res.send("username or password incorrect")
+    console.log("username or password incorrect")
+  }
+});
+
+// // verification du token
+// app.get('/auth', function(req, res){
+//   let decode = jwt.verify(token_str, 'private_key') 
+//   // res.header('autorization', 'Bearer '+token)
+
+//   if (decode.username == user.name && decode.password == user.password) {
+//     res.send("Vous êtes authentifé en rant que : "+decode.username) 
+//   }else{
+//     res.sendStatus(403)
+//   } 
+// });
+
+
+
+
+// renvoie de json 
+app.get('/messages', function(request, response) {
+    response.setHeader('Content-Type', 'Application/json')
+    response.json(messages)
+
+});
+
+// postuler un message
+app.post('/message/new', (req, res) => {
+  let newMsg = req.body
+  messages.push(newMsg)
+
+  res.send("\nOK ! Les données ont été enregistré avec succès")
+  console.log("Les data ci-dessous ont été enregistré  avec succès \n", newMsg)
+}); 
+
+
+// recuperation de l'id passé en parametre
+app.get('/message/:id', (req, res) => {
   res.setHeader('Content-Type', 'Application/json')
-  res.json(messages)
-})
-
-//
-app.post("/api", function (req, res) {
-
-})
-
-
-//pour chaque user/mdp on vérifie que les données récupérées correspondent à ma liste local
-app.post("/logins", (req, res) => {
-  logins.forEach(element => { 
-      if (req.body.name == element.name && req.body.password == element.password) {
-          res.status(200);
-
-          //génération du token:
-          const token = jwt.sign({
-            username: element.name
-          }, SECRET, { expiresIn: '7 days' })
-          res.json({ access_token: token }) //renvoie en réponse le token au format json
-      }
+  let id = parseInt(req.params.id)
+  messages.find(msg => { 
+    if (msg.id == id) {
+      res.send(messages[id])
+    }else{
+      res.sendStatus(404)
+    }
   })
-  res.status(401).send("identifiant invalide")
-})
+ 
+});
 
-app.listen(8828)
+// suppression de l'id de messages passé en parametre
+app.delete('/message/del/:id', (req, res) => {
+  let id = parseInt(req.params.id)
+  messages.splice(id, 1)
+ res.send("message deleted !")
+ console.log(`message ${id} deleted !`)
+});
 
+app.listen(PORT)
+console.log("\n Le server est en ecoute sur le port : "+PORT)

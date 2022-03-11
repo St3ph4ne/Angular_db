@@ -13,70 +13,70 @@ const PORT = 8828
 let messages =  [
   {
       id: 1,
-      title : "Message",
+      title : 'Message 1',
       content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
       sent: new Date,
       isRead: true,
     },
     {
       id: 2,
-      title : "Message",
+      title : 'Message 2',
       content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
       sent: new Date,
       isRead: true,
     },
     {
       id: 3,
-      title : "Message",
+      title : 'Message 3',
       content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
       sent: new Date,
       isRead: false,
     },
     {
       id: 4,
-      title : "Message",
+      title : 'Message 4',
       content : 'A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way. A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases. Originally, nebula was a name for any diffuse astronomical object, including galaxies beyond the Milky Way.',
       sent: new Date,
       isRead: false,
     },
     {
       id: 5,
-      title: 'Message',
+      title: 'Message 5',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
     },
     {
       id: 6,
-      title: 'Message',
+      title: 'Message 6',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
     },
     {
       id: 7,
-      title: 'Message',
+      title: 'Message 7',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
     },
     {
       id: 8,
-      title: 'Message',
+      title: 'Message 8',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
     },
     {
       id: 9,
-      title: 'Message',
+      title: 'Message 9',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
     },
     {
       id: 10,
-      title: 'Message',
+      title: 'Message 10',
       content: 'The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.',
       isRead: false,
       sent: new Date()
@@ -85,10 +85,10 @@ let messages =  [
   ]
 
 let user = {
-  name : "toto",
-  email : "toto.titi@hotmail.com",
-  password: "1234",
-  token: ""
+  name : 'toto',
+  email : 'toto.titi@hotmail.com',
+  password: '1234',
+  token: ''
 }
 
 let options = { 
@@ -104,8 +104,8 @@ app.post('/logins', (req, res) => {
     res.send(token)
     console.log("Vous êtes authentifié !")
   }else{
-    res.send("username or password incorrect")
-    console.log("username or password incorrect")
+    res.send("email ou mot de passe incorrect")
+    console.log("email ou mot de passe incorrect")
   }
 });
 
